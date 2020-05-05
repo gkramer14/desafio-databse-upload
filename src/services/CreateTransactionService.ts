@@ -26,11 +26,11 @@ class CreateTransactionService {
     const balance = await transactionRepository.getBalance();
 
     const outcomeGreaterThanIncome =
-      type === 'outcome' && balance.total - value <= 0;
+      type === 'outcome' && balance.total - value < 0;
 
     if (outcomeGreaterThanIncome) {
       throw new AppError(
-        'Unacceptable transaction, this will let income empty or negative',
+        'Unacceptable transaction, this will take our total to be negative',
         400,
       );
     }
